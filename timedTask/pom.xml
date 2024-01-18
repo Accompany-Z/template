@@ -5,13 +5,26 @@
     <groupId>com.zwfcyy</groupId>
     <artifactId>ythbkTimedTask</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>timedTask</name>
-    <description>timedTask</description>
+    <name>ythbkTimedTask</name>
+    <description>ythbkTimedTask</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>3.2.0</spring-boot.version>
+        <spring-boot.version>2.7.16</spring-boot.version>
+        <okhttp.version>4.12.0</okhttp.version>
+        <fastjson.version>2.0.7</fastjson.version>
+        <lombok.version>1.18.26</lombok.version>
+        <hutool.version>5.8.16</hutool.version>
+        <quartz.version>2.3.2</quartz.version>
+        <quartz-jobs.version>2.3.2</quartz-jobs.version>
+        <mysql.version>5.1.38</mysql.version>
+        <mybatis.version>3.0.2</mybatis.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <aliyun-sdk-datahub.version>2.19.0-public</aliyun-sdk-datahub.version>
+        <datahub-client-library.version>1.1.13-public</datahub-client-library.version>
+        <sdk-core-java.version>1.0.4</sdk-core-java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -31,27 +44,33 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>4.12.0</version>
+            <version>${okhttp.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>2.0.7</version>
+            <version>${fastjson.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.26</version>
+            <version>${lombok.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.8.16</version>
+            <version>${hutool.version}</version>
         </dependency>
 
         <dependency>
@@ -62,58 +81,58 @@
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>2.3.2</version>
+            <version>${quartz.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz-jobs</artifactId>
-            <version>2.3.2</version>
+            <version>${quartz-jobs.version}</version>
         </dependency>
 
         <!-- MySQL 依赖 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.38</version>
+            <version>${mysql.version}</version>
         </dependency>
 
         <!-- MyBatis 依赖 -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>3.0.2</version>
+            <version>${mybatis.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.5.5</version>
+            <version>${mybatis-plus.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version> <!-- 请根据你需要的版本进行更改 -->
+            <version>${commons-lang3.version}</version> <!-- 请根据你需要的版本进行更改 -->
         </dependency>
 
         <dependency>
             <groupId>com.aliyun.datahub</groupId>
             <artifactId>aliyun-sdk-datahub</artifactId>
-            <version>2.24.8</version>
+            <version>${aliyun-sdk-datahub.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.aliyun.datahub/datahub-client-library -->
         <dependency>
             <groupId>com.aliyun.datahub</groupId>
             <artifactId>datahub-client-library</artifactId>
-            <version>1.1.13-public</version>
+            <version>${datahub-client-library.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.aliyun.api.gateway</groupId>
             <artifactId>sdk-core-java</artifactId>
-            <version>1.0.4</version>
+            <version>${sdk-core-java.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -151,18 +170,17 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
-                <configuration>
-                    <mainClass>com.zwfcyy.TimedTaskApplication</mainClass>
-                    <skip>true</skip>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>repackage</id>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <skip>true</skip>
+                    <mainClass>com.zwfcyy.TimedTaskApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
