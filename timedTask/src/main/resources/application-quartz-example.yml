@@ -1,0 +1,25 @@
+quartz:
+  # jobGroup名称一致的情况下，不可出现相同jobName
+  jobs[0]:
+    taskName: 测试demo1
+    # 以服务名为组名
+    taskGroup: DEMO
+    # 业务逻辑处理类的包名
+    taskClassName: com.zwfcyy.task.ExamplesDemo1Task
+    # cron表达式
+    cronExpression: 0/5 * * * * ?
+    # 任务状态 1 正常 0 暂停
+    triggerState: 1
+    # 排序
+    sort: 1
+  jobs[1]:
+    taskName: 测试demo2
+    # 以服务名为组名
+    taskGroup: DEMO
+    # 业务逻辑处理类的包名
+    taskClassName: com.zwfcyy.task.ExamplesDemo2Task
+    # cron表达式
+    cronExpression: 0/10 * * * * ?
+    # 任务状态 1 正常 0 暂停
+    triggerState: 1
+    sort: 2

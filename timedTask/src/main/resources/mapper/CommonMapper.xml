@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hysoft.mapper.CommonMapper">
+    <insert id="insertZlbkLog">
+        insert into t_ythbk_zlbk_log (systemid, ythbkbh, jklx, rwcllx, sfcg, clsj)
+        values (#{systemid}, #{ythbkbh}, #{jklx}, #{rwcllx}, '0', now())
+    </insert>
+    <insert id="insertLog">
+        insert into t_ythbk_intf_log(id,
+                                     ythbkbh,
+                                     object_id,
+                                     intf_url,
+                                     intf_code,
+                                     intf_name,
+                                     request,
+                                     request_time,
+                                     response,
+                                     response_code,
+                                     response_msg,
+                                     response_time,
+                                     service_ip,
+                                     service_usage,
+                                     method)
+        VALUES (#{id}, #{ythbkbh}, {object_id}, #{intf_url}, #{intf_code}, #{intf_name}, #{request}, #{request_time},
+                #{response}, #{response_code}, #{response_msg}, #{response_time}, #{service_ip}, #{service_usage},
+                #{method})
+    </insert>
+    <insert id="insertYjxx">
+        insert into t_ythbk_bk_yjxx(yjxx_id, ythbkbh, rwmc, object_id, bzhm, yjly, sfzh, xm,
+        <if test="hdsj != null and hdsj != ''">
+            hdsj,
+        </if>
+        hdfsdqh, dtxxlb, yjxx_topic, yjxx_content, yjsj, yjjsdw, yjjsdwmc, hdxgxx, yjlx, del_flag)
+        values (#{yjxx_id}, #{ythbkbh}, #{rwmc}, #{object_id}, #{bzhm}, #{yjly}, #{sfzh}, #{xm},
+        <if test="hdsj != null and hdsj != ''">
+            #{hdsj},
+        </if>
+        #{hdfsdqh}, #{dtxxlb}, #{yjxx_topic}, #{yjxx_content}, #{yjsj}, #{yjjsdw}, #{yjjsdwmc}, #{hdxgxx}, #{yjlx}, '0')
+    </insert>
+    <insert id="insertTsdw">
+        insert into t_ythbk_yjxx_tsdw(pkid, ythbkbh, yjxx_id, jsdwbm, sfqs, sffk, create_by, create_date, sfyqs, sfyfk,
+                                      del_flag, tsyjlx)
+        values (#{pkid}, #{ythbkbh}, #{yjxx_id}, #{jsdwbm}, #{sfqs}, #{sffk}, 'task', now(), '0', '0', '0', #{tsyjlx})
+    </insert>
+    <insert id="logYjxx">
+        insert into t_ythbk_yjxx_original(id, ythbkbh, object_id, yjxx_id, yjxx, status, create_time)
+        VALUES (#{id}, #{ythbkbh}, #{object_id}, #{yjxx_id}, #{yjxx}, #{status}, now())
+    </insert>
+    <insert id="insertZprn">
+        insert into yw_zdrygk.t_zdry_photo(SYSTEMID, cjsj, bz, sfzh, zpnr, res05)
+        values (#{id}, now(), #{bz}, #{sfzh}, #{zpnr}, #{res05})
+    </insert>
+    <update id="locked">
+        update t_ythbk_bk_bkrw
+        set status = #{lockedUser}
+        where 1 = 1
+        and bkzt = #{bkzt}
+        <if test="bkzt == '01'">
+            and status in ('0', '1')
+        </if>
+        <if test="bkzt == '02'">
+            and status = '02'
+        </if>
+        and bkfw like '%01%'
+        and del_flag = '0'
+        <if test="rxbk != null and rxbk != '' and rxbk == 'yes'">
+            and (bkzy like '3;%' or bkzy like '%;3%')
+        </if>
+    </update>
+    <update id="updateZlbkLog">
+        update t_ythbk_zlbk_log
+        set
+        clsj= now()
+        <if test="sfcg != null and sfcg != ''">
+            ,sfcg = #{sfcg}
+        </if>
+        <if test="jssj != null and jssj != ''">
+            ,jssj= now()
+        </if>
+        <if test="zlsj != null and zlsj != ''">
+            ,zlsj= #{zlsj}
+        </if>
+        <if test="zlsj_old != null and zlsj_old != ''">
+            ,zlsj_old= #{zlsj_old}
+        </if>
+        where ythbkbh = #{ythbkbh}
+    </update>
+    <update id="updateBkrw">
+        update t_ythbk_bk_bkrw
+        set bkzt='02',
+            status = '02',
+            update_date=now()
+        where bkzt = '01'
+          and del_flag = '0'
+          and bkjssj &lt; now()
+          and status not in ('0', '1')
+    </update>
+    <update id="updateBkdx">
+        update t_ythbk_bk_bkhmb
+        set bkzt='02',
+            status = '02',
+            update_date=now()
+        where del_flag = '0'
+          and bkzt = '01'
+          and bk_jssj &lt; now()
+          and status = '01'
+    </update>
+    <update id="upateTaskRequestID">
+        update t_ythbk_bk_bkhmb
+        set task_rx_id = #{taskRequestID}
+        where object_id = #{dxid}
+    </update>
+    <update id="updateZlbkEnd">
+        update t_ythbk_zlbk_log
+        set jssj = now(),
+        zlsj = #{zlsj}
+        <if test="zlsj_old != null and zlsj_old != ''">
+            zlsj_old = #{zlsj_old}
+        </if>
+    </update>
+    <select id="findBkdxByrwbh" resultType="com.hysoft.entity.BkInfo">
+        select bkhm.ythbkbh,
+        bkhm.object_id dxid,
+        bkhm.bk_kssj kssj,
+        bkhm.bk_jssj jssj,
+        rw.rwmc,
+        rw.bkbq,
+        rw.bkzq,
+        rw.bkfw,
+        rw.czyq,
+        rw.bklx,
+        rw.jqajbh,
+        rw.bkly rwms,
+        bkhm.bq,
+        bkhm.czcs,
+        rw.bkfslb,
+        bkhm.bkxm,
+        rw.dxmx,
+        rw.sfxypzbkqy,
+        rw.bkzy
+        from t_ythbk_bk_bkrw rw,
+        t_ythbk_bk_bkhmb bkhm
+        where rw.ythbkbh = bkhm.ythbkbh
+        and rw.bkzt = '01'
+        and rw.bkfw like '%01%'
+        and rw.del_flag = '0'
+        and bkhm.del_flag = '0'
+        and bkhm.bk_kssj is not null
+        and bkhm.bk_jssj is not null
+        and rw.ythbkbh = #{ythbkbh}
+        and (bkhm.status is null or bkhm.status not in ('01', '02', '03'))
+        <if test="maxDate != null and maxDate != ''">
+            and bkhm.update_date &lt;= #{maxDate}
+        </if>
+        <if test="zlsj != null and zlsj != ''">
+            and bkhm.update_date &gt; #{zlsj}
+        </if>
+    </select>
+    <select id="findBkxxBydxid" resultType="java.util.Map">
+        select b.ythbkbh,
+               b.rwmc,
+               a.sfzh,
+               a.bkxm,
+               b.fkdwlx,
+               b.fkdw,
+               b.qsdwlx,
+               b.qsdw,
+               b.fksfqs,
+               b.yjjsdw,
+               b.sffk,
+               b.yjjsdwmc,
+               a.object_id
+        from t_ythbk_bk_bkhmb a,
+             t_ythbk_bk_bkrw b
+        where a.ythbkbh = b.ythbkbh
+          and a.object_id = #{dxid} limit  1
+    </select>
+    <select id="findWaitYthbk" resultType="java.lang.String">
+        select distinct (rw.ythbkbh)
+        from t_ythbk_bk_bkrw rw
+        where status = #{lockedUser}
+    </select>
+    <select id="findZrdw" resultType="java.util.Map">
+        select group_concat(case when hmlb = '016' then hmlb end separator ',') as zrdw,
+               group_concat(case when hmlb = '017' then hmlb end separator ',') as zrdwcoed
+        from t_ythbk_bk_bkhmb_exp
+        where hmlb in ('016', '017')
+          and subject_id = #{dxid} limit 1
+    </select>
+    <select id="findCkdxByrwbh" resultType="com.hysoft.entity.BkInfo">
+        select bkhm.ythbkbh,
+               bkhm.object_id dxid,
+               bkhm.sfzh,
+               bkhm.sjh,
+               bkhm.cph,
+               bkhm.imsi,
+               bkhm.bk_kssj   kssj,
+               bkhm.bk_jssj   jssj,
+               rw.rwmc,
+               rw.bkbq,
+               rw.bkzq,
+               rw.bkfw,
+               rw.czyq,
+               rw.bklx,
+               rw.jqajbh,
+               rw.bkly        rwms,
+               rw.bkzy
+        from t_ythbk_bk_bkrw rw,
+             t_ythbk_bk_bkhmb bkhm
+        where rw.ythbkbh = bkhm.ythbkbh
+          and rw.bkfw like '%01%'
+          and rw.del_flag = '0'
+          and rw.bkzt = '02'
+          and bkhm.del_flag = '0'
+          and bkhm.bk_kssj is not null
+          and bkhm.bk_jssj is not null
+          and bkhm.`status` = '02'
+          and rw.ythbkbh = #{ythbkbh}
+    </select>
+    <select id="findWaitRxYthbk" resultType="java.util.Map">
+        select ythbkbh,
+               rwmc,
+               bkly,
+               bkjssj,
+               bkkssj,
+               bkfslb,
+               dxmx,
+               sfxypzbkqy,
+               bkzy,
+               bkzq,
+               bkfw,
+               czyq,
+               bklx,
+               jqajbh,
+               bkbq,
+               create_by,
+               (select a.person_code from hr_employee a where a.person_work_code = create_by limit 1) bkrsfzh
+        from t_ythbk_bk_bkrw
+        where status = #{lockeduser}
+    </select>
+    <select id="findBkdxRxByrwbh" resultType="com.hysoft.entity.BkInfo">
+        SELECT BKHM.YTHBKBH,
+               bkhm.object_id DXID,
+               bkhm.SFZH,
+               bkhm.SJH,
+               bkhm.CPH,
+               bkhm.IMSI,
+               bkhm.BQ,
+               bkhm.CZCS,
+               bkhm.BKXM,
+               bkhm.bk_kssj   KSSJ,
+               bkhm.bk_jssj   JSSJ,
+               rw.RWMC,
+               rw.BKFSLB,
+               rw.DXMX,
+               rw.SFXYPZBKQY,
+               rw.BKZY,
+               rw.BKBQ,
+               rw.BKZQ,
+               rw.BKFW,
+               rw.CZYQ,
+               rw.BKLX
+        from t_ythbk_bk_bkrw rw,
+             t_ythbk_bk_bkhmb bkhm
+        where rw.ythbkbh = bkhm.ythbkbh
+          and rw.bkzt = '01'
+          and rw.BKFW like '%01%'
+          and rw.DEL_FLAG = '0'
+          and bkhm.del_flag = '0'
+          and bkhm.bk_kssj is not null
+          and bkhm.bk_jssj is not null
+          and rw.ythbkbh = #{ythbkbh}
+          and (bkhm.status is null or bkhm.status not in ('01', '02', '03'))
+    </select>
+    <select id="findCkyj" resultType="com.hysoft.entity.ZdryBkRt">
+        select xxzjbh,
+               bkhmlx,
+               bkhm,
+               xm,
+               bkkssj,
+               bkjssj,
+               bkdxfjxx,
+               bkzt,
+               del_flag,
+               rksj,
+               gxsj,
+               tssj,
+               cxsj,
+               bkzp,
+               bqbk,
+               qtbk,
+               bkid,
+               ckid
+        from t_ckyj_rtb
+        where del_flag = '0'
+          and bkzt = #{lockedUser}
+          <if test="status != null and status.indexOf('CK') != -1">
+              and ckid is not null and ckid != ''
+          </if>
+          <if test="status != null and status.indexOf('BK') != -1">
+              and bkid is not null and bkid != ''
+          </if>
+    </select>
+
+    <insert id="insertCkyjLog">
+        insert into t_ythbk_ckyj_log(id, object_id, intf_url, task_code, task_name, request, response, status, method,
+                                     type, create_date)
+        VALUES (#{id}, #{object_id}, #{intf_url}, #{task_code}, #{task_name}, #{request}, #{response}, #{status},
+                #{method}, #{type}, now())
+    </insert>
+</mapper>

@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: timedTask
+  # 用于配置 Spring Profiles
+  profiles:
+    # 当前激活的 Spring Profile
+    active: test
+    # 指定额外要包含的 Profile
+    include: quartz-demo
+  # Quartz Scheduler Configuration
+  quartz:
+    # 是否在Spring应用启动时自动启动Quartz Scheduler
+    auto-startup: true
+    # Scheduler启动时的延迟时间为5秒
+    startup-delay: 5s
+    # 是否覆盖已存在的Quartz jobs
+    overwrite-existing-jobs: true
+    # Quartz调度器的其他属性
+    properties:
+      org:
+        quartz:
+          scheduler:
+            # 指定Quartz Scheduler的实例名称
+            instanceName: TIMEDTASK
+            # 使用AUTO为Quartz Scheduler生成实例ID
+            instanceId: AUTO
+          threadPool:
+            # 设置Quartz线程池的线程数为50
+            threadCount: 50
+mybatis-plus:
+  mapper-locations: classpath*:com/zwfcyy/**/xml/*Mapper.xml
+  type-aliases-package: com.zwfcyy.pojo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+# log config
+logging:
+  config: classpath:logback.xml
