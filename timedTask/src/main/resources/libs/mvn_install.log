@@ -1,0 +1,35 @@
+[24-02-20 10:09:06] aspose-words-18.10-jdk16.jar: D:\Echoz\Documents\workspace\hysoft\uep\st\jjzdcgs\jjzdcgsTimedTask\src\main\resources\libs\aspose-words-18.6-jdk16-crack.jar 
+[24-02-20 10:09:06] ojdbc8.jar: D:\Echoz\Documents\workspace\hysoft\uep\st\jjzdcgs\jjzdcgsTimedTask\src\main\resources\libs\ojdbc8-8.jar 
+[24-02-20 10:09:06] D:\Echoz\Documents\workspace\hysoft\uep\st\jjzdcgs\jjzdcgsTimedTask\src\main\resources\libs\aspose-words-18.6-jdk16-crack.jar 已找到,准备执行安装命令... 
+[24-02-20 10:09:06] D:\Echoz\Documents\workspace\hysoft\uep\st\jjzdcgs\jjzdcgsTimedTask\src\main\resources\libs\ojdbc8-8.jar 已找到,准备执行安装命令... 
+[24-02-20 10:09:06] mvn install:install-file -Dfile=D:\Echoz\Documents\workspace\hysoft\uep\st\jjzdcgs\jjzdcgsTimedTask\src\main\resources\libs\ojdbc8-8.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=8 -Dpackaging=jar -DgeneratePom=true -U 
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< org.apache.maven:standalone-pom >-------------------
+[INFO] Building Maven Stub Project (No POM) 1
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install-file (default-cli) @ standalone-pom ---
+[INFO] Installing D:\Echoz\Documents\workspace\hysoft\uep\st\jjzdcgs\jjzdcgsTimedTask\src\main\resources\libs\ojdbc8-8.jar to D:\MyIdetool\maven\maven-repository\com\oracle\ojdbc8\8\ojdbc8-8.jar
+[INFO] Installing C:\Users\Echoz\AppData\Local\Temp\mvninstall513786149916583928.pom to D:\MyIdetool\maven\maven-repository\com\oracle\ojdbc8\8\ojdbc8-8.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  0.439 s
+[INFO] Finished at: 2024-02-20T10:09:07+08:00
+[INFO] ------------------------------------------------------------------------
+[24-02-20 10:09:06] mvn install:install-file -Dfile=D:\Echoz\Documents\workspace\hysoft\uep\st\jjzdcgs\jjzdcgsTimedTask\src\main\resources\libs\aspose-words-18.6-jdk16-crack.jar -DgroupId=com.aspose -DartifactId=aspose-words -Dversion=18.6 -Dpackaging=jar -Dclassifier=jdk16 -U 
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< org.apache.maven:standalone-pom >-------------------
+[INFO] Building Maven Stub Project (No POM) 1
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install-file (default-cli) @ standalone-pom ---
+[INFO] Installing D:\Echoz\Documents\workspace\hysoft\uep\st\jjzdcgs\jjzdcgsTimedTask\src\main\resources\libs\aspose-words-18.6-jdk16-crack.jar to D:\MyIdetool\maven\maven-repository\com\aspose\aspose-words\18.6\aspose-words-18.6-jdk16.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  0.355 s
+[INFO] Finished at: 2024-02-20T10:09:09+08:00
+[INFO] ------------------------------------------------------------------------
