@@ -22,7 +22,7 @@
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <poi-tl.version>1.12.1</poi-tl.version>
         <quartz.version>2.3.2</quartz.version>
-        <quartz-jobs.version>2.3.2</quartz-jobs.version>
+        <quartz-jobs.version>2.3.0</quartz-jobs.version>
         <logback.version>1.4.14</logback.version>
     </properties>
     <dependencies>

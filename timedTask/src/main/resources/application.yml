@@ -8,25 +8,48 @@ spring:
     # 指定额外要包含的 Profile
     include: quartz-demo
   # Quartz Scheduler Configuration
-  quartz:
-    # 是否在Spring应用启动时自动启动Quartz Scheduler
-    auto-startup: true
-    # Scheduler启动时的延迟时间为5秒
-    startup-delay: 5s
-    # 是否覆盖已存在的Quartz jobs
-    overwrite-existing-jobs: true
-    # Quartz调度器的其他属性
-    properties:
-      org:
-        quartz:
-          scheduler:
-            # 指定Quartz Scheduler的实例名称
-            instanceName: TIMEDTASK
-            # 使用AUTO为Quartz Scheduler生成实例ID
-            instanceId: AUTO
-          threadPool:
-            # 设置Quartz线程池的线程数为50
-            threadCount: 50
+quartz:
+  # 使用JDBC作为Quartz的Job存储方式，支持持久化任务
+  job-store-type: jdbc
+  # 默认初始化Quartz的数据库架构，使用内嵌的数据库架构（适用于开发环境）
+  initialize-schema: embedded
+  # 是否在Spring应用启动时自动启动Quartz Scheduler（调度器）任务
+  auto-startup: true
+  # Scheduler启动时的延迟时间，设置为5秒
+  startup-delay: 5s
+  # 是否覆盖已更新存在的Quartz jobs
+  overwrite-existing-jobs: true
+  # Quartz调度器的其他属性配置
+  properties:
+    org:
+      quartz:
+        scheduler:
+          # Quartz调度器的实例名称
+          instanceName: TIMEDTASK
+          # 自动生成Quartz Scheduler实例ID，防止硬编码
+          instanceId: AUTO
+        threadPool:
+          # 使用SimpleThreadPool类作为线程池实现
+          class: org.quartz.simpl.SimpleThreadPool
+          # 设置线程池的线程数为10
+          threadCount: 10
+          # 设置线程的优先级，5为中等优先级
+          threadPriority: 5
+          # 线程池中的线程是否继承初始化线程的上下文类加载器
+          threadsInheritContextClassLoaderOfInitializingThread: true
+        jobStore:
+          # 使用Spring框架提供的LocalDataSourceJobStore来处理Quartz任务存储
+          class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+          # 设置数据库代理类为PostgreSQLDelegate，用于PostgreSQL数据库
+          driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+          # 设置表前缀为QRTZ_，在数据库中用于标识Quartz的表
+          tablePrefix: QRTZ_
+          # 启用集群模式，允许多个Quartz实例共同调度任务
+          isClustered: true
+          # 设置任务错过触发的阈值时间（单位：毫秒）
+          misfireThreshold: 12000
+          # 集群检查的间隔时间，单位：毫秒，设置为15秒
+          clusterCheckinInterval: 15000
 mybatis-plus:
   mapper-locations: classpath*:com/zwfcyy/**/xml/*Mapper.xml
   type-aliases-package: com.zwfcyy.pojo
